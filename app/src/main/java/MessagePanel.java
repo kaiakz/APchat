@@ -12,43 +12,9 @@ import java.util.logging.SimpleFormatter;
 
 public class MessagePanel {
     ListView MessageView;
-    EditText MessageTxt;
-    ImageButton BtnSendTxt;
-    ImageButton BtnSendImage;
-    ImageButton BtnSendFile;
 
-    public MessagePanel(ListView MessageView,
-                        final EditText MessageTxt,
-                        ImageButton BtnSendTxt,
-                        ImageButton BtnSendImage,
-                        ImageButton BtnSendFile) {
-
+    public MessagePanel(ListView MessageView) {
         this.MessageView = MessageView;
-        this.MessageTxt = MessageTxt;
-        this.BtnSendTxt = BtnSendTxt;
-        this.BtnSendImage = BtnSendImage;
-        this.BtnSendFile = BtnSendFile;
-
-        this.BtnSendTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        this.BtnSendImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        this.BtnSendFile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     public void putText(String name, String text) {
@@ -59,8 +25,8 @@ public class MessagePanel {
 
     }
 
-    public void putTimestamp() {
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis()));
+    public String getTimestamp() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis()));
     }
 
 

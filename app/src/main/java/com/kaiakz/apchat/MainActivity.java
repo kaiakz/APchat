@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         this.BtnSendTxt = findViewById(R.id.btn_sendtxt);
         this.BtnSendImage = findViewById(R.id.btn_sendimg);
         this.BtnSendFile = findViewById(R.id.btn_sendfile);
+
+        MessageAdapter adapter = new MessageAdapter(MainActivity.this);
+
+        this.MessageView.setAdapter(adapter);
+
+        adapter.add(new Message("Kai", "Hello"));
+
         this.BtnSendTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

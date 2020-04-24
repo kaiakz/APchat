@@ -2,6 +2,7 @@ package com.kaiakz.apchat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,13 +22,15 @@ public class MainActivity extends AppCompatActivity {
     ImageButton BtnSendImage;
     ImageButton BtnSendFile;
 
+    MessageAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra("Username");
+        final String username = intent.getStringExtra("Username");
 
         this.MessageTxt = findViewById(R.id.editText);
         this.MessageView = findViewById(R.id.listview_msg);
@@ -35,18 +38,15 @@ public class MainActivity extends AppCompatActivity {
         this.BtnSendImage = findViewById(R.id.btn_sendimg);
         this.BtnSendFile = findViewById(R.id.btn_sendfile);
 
-        MessageAdapter adapter = new MessageAdapter(MainActivity.this);
+        this.adapter = new MessageAdapter(MainActivity.this);
 
         this.MessageView.setAdapter(adapter);
-
-        adapter.add(new Message("Kai", "Hello"));
 
         this.BtnSendTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String t = MessageTxt.getText().toString();
-                Toast ts = Toast.makeText(getBaseContext(), t, Toast.LENGTH_LONG);
-                ts.show();
+                String msg = MessageTxt.getText().toString();
+                adapter.putText(new Message(username, msg));
             }
         });
 

@@ -13,12 +13,14 @@ import java.util.ArrayList;
 public class MessageAdapter extends BaseAdapter {
     private ArrayList<Message> messages = new ArrayList<Message>();
     private Context context;
+    private  LayoutInflater li;
 
     public MessageAdapter(Context context) {
         this.context = context;
+        li = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void add(Message message) {
+    public void putText(Message message) {
         this.messages.add(message);
         notifyDataSetChanged();
     }
@@ -36,10 +38,9 @@ public class MessageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MessageViewHolder holder = new MessageViewHolder();
-        LayoutInflater messageInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         Message message = messages.get(position);
 
-        convertView = messageInflater.inflate(R.layout.msg_txt_item, null);
+        convertView = this.li.inflate(R.layout.msg_txt_item, parent, false);
         convertView.setTag(holder);
         holder.messageBody = (TextView)convertView.findViewById(R.id.msg_txt_ctx);
         holder.id = (TextView)convertView.findViewById(R.id.msg_txt_name);

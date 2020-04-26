@@ -5,17 +5,38 @@ import java.util.Date;
 
 public class Message {
     private String id;
-    private String text;
     private String date;
+    private TYPE type;
+    private Object body;
 
-    public Message(String id, String text) {
-        this.text = text;
+    public static enum TYPE {
+        TEXT, IMAGE;
+    }
+
+    public Message(String id, String body) {
+        this.body = body;
         this.id = id;
+        this.type = TYPE.TEXT;
+        fillDate();
+    }
+
+    public Message(String id, int body) {
+        this.body = body;
+        this.id = id;
+        this.type = TYPE.IMAGE;
         fillDate();
     }
 
     public String getText() {
-        return text;
+        return (String) body;
+    }
+
+    public int getImage() {
+        return (Integer)body;
+    }
+
+    public TYPE getType() {
+        return type;
     }
 
     public String getId() {
@@ -27,6 +48,6 @@ public class Message {
     }
 
     public void fillDate() {
-        this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date(System.currentTimeMillis()));
+        this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
     }
 }

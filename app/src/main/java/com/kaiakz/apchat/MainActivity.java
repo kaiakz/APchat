@@ -2,17 +2,12 @@ package com.kaiakz.apchat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
-import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.TwoLineListItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,14 +41,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String msg = MessageTxt.getText().toString();
-                adapter.putText(new Message(username, msg));
+                MessageTxt.setText("");
+                adapter.putMessage(new Message(username, msg));
             }
         });
 
         this.BtnSendImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                adapter.putMessage(new Message(username, 1));
             }
         });
 

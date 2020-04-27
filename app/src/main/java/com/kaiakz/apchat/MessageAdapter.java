@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MessageAdapter extends BaseAdapter {
-    private ArrayList<Message> messages = new ArrayList<Message>();
+    private ArrayList<Message> messages;
     private Context context;
     private  LayoutInflater li;
 
@@ -29,6 +29,13 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     public MessageAdapter(Context context) {
+        this.messages = new ArrayList<>();
+        this.context = context;
+        li = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public MessageAdapter(Context context, ArrayList<Message> messages) {
+        this.messages = messages;
         this.context = context;
         li = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }
@@ -36,6 +43,10 @@ public class MessageAdapter extends BaseAdapter {
     public void putMessage(Message message) {
         this.messages.add(message);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Message> exportMessages() {
+        return  this.messages;
     }
 
     @Override

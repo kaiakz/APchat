@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         this.MessageView.setAdapter(adapter);
 
         this.manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+        assert manager != null;
         this.channel = manager.initialize(this, getMainLooper(), null);     // which is used to connect your application to the Wi-Fi P2P framework.
         this.receiver = new WifiDirectBroadcastReceiver(this.manager, this.channel, this);
 

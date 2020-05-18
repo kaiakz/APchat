@@ -31,6 +31,12 @@
             android:hint="CODE"
             android:inputType="text"
             android:id="@+id/edittext_roomid"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Remember Me"
+            android:id="@+id/cb_rem" />
     </LinearLayout>
 
 

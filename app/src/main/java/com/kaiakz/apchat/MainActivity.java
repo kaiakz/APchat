@@ -1,24 +1,26 @@
 package com.kaiakz.apchat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Widgets
     ListView MessageView;
     EditText MessageTxt;
     ImageButton BtnSendTxt;
@@ -27,11 +29,26 @@ public class MainActivity extends AppCompatActivity {
 
     MessageAdapter adapter;
 
+    // WiFi P2P
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
     BroadcastReceiver receiver;
 
     IntentFilter intentFilter;
+
+    ArrayList<WifiP2pDevice> peersList = new ArrayList<WifiP2pDevice>();
+
+    WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
+        @Override
+        public void onPeersAvailable(WifiP2pDeviceList peers) {
+            if (peers.getDeviceList().size() == 0) {
+                Toast.makeText(getApplicationContext(), "No Devices Found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            peersList.clear();
+            peersList.addAll(peers.getDeviceList());
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         this.manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         this.channel = manager.initialize(this, getMainLooper(), null);     // which is used to connect your application to the Wi-Fi P2P framework.
         this.receiver = new WifiDirectBroadcastReceiver(this.manager, this.channel, this);
+
 
         // Add listener for buttons
         this.BtnSendTxt.setOnClickListener(new View.OnClickListener() {

@@ -3,13 +3,8 @@ package com.kaiakz.apchat;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pDevice;
-import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //https://developer.android.com/guide/topics/connectivity/wifip2p#java
 
@@ -17,14 +12,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
     MainActivity activity;
-    ArrayList<WifiP2pDevice> peersList = new ArrayList<>();
-    WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
-        @Override
-        public void onPeersAvailable(WifiP2pDeviceList peers) {
-            peersList.clear();
-            peersList.addAll(peers.getDeviceList());
-        }
-    };
 
     public WifiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel, MainActivity activity) {
         this.manager = manager;
@@ -43,10 +30,11 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
             } else {
                 Toast.makeText(activity, "WiFI OFF", Toast.LENGTH_SHORT).show();
             }
+
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Call WifiP2pManager.requestPeers() to get a list of current peers
                 if (manager != null) {
-                    manager.requestPeers(channel, peerListListener);
+                    manager.requestPeers(channel, activity.peerListListener);
                 }
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
             // Respond to new connection or disconnections

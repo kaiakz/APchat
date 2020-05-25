@@ -81,7 +81,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:text="@string/login_btn_guest"
-                android:onClick="login"/>
+                android:onClick="AsGuest" />
         </LinearLayout>
     </RelativeLayout>
 

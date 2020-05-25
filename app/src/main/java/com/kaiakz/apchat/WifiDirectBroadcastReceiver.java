@@ -4,16 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.widget.Toast;
+import android.util.Log;
 
 //https://developer.android.com/guide/topics/connectivity/wifip2p#java
 
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     WifiP2pManager manager;
     WifiP2pManager.Channel channel;
-    MainActivity activity;
+    LoginActivity activity;
 
-    public WifiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel, MainActivity activity) {
+    public WifiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel, LoginActivity activity) {
         this.manager = manager;
         this.channel = channel;
         this.activity = activity;
@@ -26,9 +26,11 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
             // Check to see if Wi-Fi is enabled and notify appropriate activity
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
             if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
-                Toast.makeText(activity, "WiFI ON", Toast.LENGTH_SHORT).show();
+                Log.d("WIFI", "ON");
+//                Toast.makeText(activity, "WiFI ON", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(activity, "WiFI OFF", Toast.LENGTH_SHORT).show();
+                Log.d("WIFI", "OFF");
+//                Toast.makeText(activity, "WiFI OFF", Toast.LENGTH_SHORT).show();
             }
 
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {

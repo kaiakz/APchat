@@ -1,4 +1,13 @@
 package com.kaiakz.apchat;
 
-public class Server {
+import java.net.Socket;
+
+public class Server implements Runnable {
+    Socket socket;
+
+
+    @Override
+    public void run() {
+
+    }
 }

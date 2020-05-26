@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.InetAddresses;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
@@ -44,6 +47,21 @@ public class LoginActivity extends AppCompatActivity {
             }
             peersList.clear();
             peersList.addAll(peers.getDeviceList());
+        }
+    };
+
+    WifiP2pManager.ConnectionInfoListener connectionInfoListener = new WifiP2pManager.ConnectionInfoListener() {
+        @Override
+        public void onConnectionInfoAvailable(WifiP2pInfo info) {
+            // TODO
+            final InetAddress groupOwnerAddress = info.groupOwnerAddress;
+
+            if(info.groupFormed && info.isGroupOwner) {
+                Toast.makeText(getApplicationContext(), "I am Host", Toast.LENGTH_SHORT).show();
+            } else if(info.groupFormed) {
+                Toast.makeText(getApplicationContext(), "I am Guest", Toast.LENGTH_SHORT).show();
+            }
+
         }
     };
 
